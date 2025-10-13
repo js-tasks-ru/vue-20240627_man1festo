@@ -32,20 +32,37 @@ export const emails = [
 export default defineComponent({
   name: 'MarkedEmailsApp',
 
-  setup() {},
+  setup() {
+    const emailsArray = emails;
+    const search = ref(null);
+    const filteredEmails = computed(() => {
+      if(!search.value) {
+        return []
+      }
+      return emailsArray.filter((email) => {
+        return email.toLowerCase().includes(search.value.toLowerCase());
+      });
+    });
+    return {
+      emailsArray,
+      search,
+      filteredEmails
+    }
+  },
 
   template: `
     <div>
       <div class="form-group">
-        <input type="search" aria-label="Search" />
+        <input type="search" v-model="search" aria-label="Search" />
       </div>
       <ul aria-label="Emails">
-        <li>
-          Eliseo@gardner.biz
+        <template v-for="email in emailsArray">
+        <li :class="{
+          'marked' : filteredEmails.includes(email)
+       }">
+          {{email}}
         </li>
-        <li class="marked">
-          Jayne_Kuhic@sydney.com
-        </li>
+        </template>
       </ul>
     </div>
   `,

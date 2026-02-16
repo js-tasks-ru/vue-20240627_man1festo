@@ -33,20 +33,18 @@ export default defineComponent({
   name: 'MarkedEmailsApp',
 
   setup() {
-    const emailsArray = emails;
-    const search = ref(null);
-    const filteredEmails = computed(() => {
-      if(!search.value) {
-        return []
-      }
-      return emailsArray.filter((email) => {
-        return email.toLowerCase().includes(search.value.toLowerCase());
-      });
-    });
+    const search = ref(null)
+    const emailsArray = computed(() => {
+      return emails.map(email => {
+        return {
+          email: email,
+          filtered: search.value ? email.toLowerCase().includes(search.value.toLowerCase()) : false,
+        }
+      })
+    })
     return {
       emailsArray,
       search,
-      filteredEmails
     }
   },
 
@@ -56,13 +54,11 @@ export default defineComponent({
         <input type="search" v-model="search" aria-label="Search" />
       </div>
       <ul aria-label="Emails">
-        <template v-for="email in emailsArray">
-        <li :class="{
-          'marked' : filteredEmails.includes(email)
+        <li v-for="email in emailsArray" :class="{
+          'marked' : email.filtered
        }">
-          {{email}}
+          {{email.email}}
         </li>
-        </template>
       </ul>
     </div>
   `,

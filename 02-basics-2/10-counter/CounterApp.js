@@ -4,7 +4,7 @@ export default defineComponent({
   name: 'CounterApp',
 
   setup() {
-    let i = ref(0);
+    const i = ref(0);
     return {
       i
     }
@@ -17,7 +17,7 @@ export default defineComponent({
         type="button"
         aria-label="Decrement"
         :disabled="i === 0"
-        v-on:click="i--"
+        @click="i--"
       >➖</button>
       <span class="count" data-testid="count" >{{i}}</span>
 
@@ -26,7 +26,7 @@ export default defineComponent({
         type="button"
         aria-label="Increment"
         :disabled="i === 5"
-        v-on:click="i++"
+        @click="i++"
       >➕</button>
     </div>
   `,

@@ -9,10 +9,7 @@ export default defineComponent({
     const weatherConditionIcons = WeatherConditionIcons;
 
     function isNight(dt, sunrise, sunset) {
-      const dtDate = new Date().setHours(dt.split(':')[0], dt.split(':')[1])
-      const sunriseDate = new Date().setHours(sunrise.split(':')[0], sunrise.split(':')[1])
-      const sunsetDate = new Date().setHours(sunset.split(':')[0], sunset.split(':')[1])
-      return (dtDate > sunsetDate || dtDate < sunriseDate)
+      return (dt > sunset || dt < sunrise)
     }
 
     return {

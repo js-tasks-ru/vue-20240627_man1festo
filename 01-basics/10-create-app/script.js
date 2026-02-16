@@ -1,16 +1,17 @@
 import { defineComponent, createApp } from 'vue'
-
 const App = defineComponent({
   name: 'App',
-
   setup() {
-    const date = new Date().toLocaleDateString(navigator.language, { dateStyle: 'long' })
+    const dateFormatted = new Date().toLocaleDateString(navigator.language, { dateStyle: 'long' });
     return {
-      date,
-    }
+      dateFormatted
+    };
   },
 
-  template: `<div>Сегодня {{ date }}</div>`,
-})
-
-createApp(App).mount('#app')
+  template: `
+  <div>{{'Сегодня ' + dateFormatted}}</div>
+  `
+});
+const app = createApp(App)
+const vm = app.mount('#app')
+window.vm = vm
